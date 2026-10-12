@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "appstore-studio-api",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-10-12",
+  "vars": {
+    "ALLOWED_ORIGINS": "http://127.0.0.1:5173,http://localhost:5173,https://x196691x.github.io",
+    "IMAGE_MODEL": "openai/gpt-image-2",
+    "DAILY_LIMIT": "10"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "QUOTA",
+        "class_name": "GenerationQuota"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "GenerationQuota"
+      ]
+    }
+  ]
+}
