@@ -1,5 +1,6 @@
 import { ensureFont, fontFamily, fontWeight } from './fonts';
 import demoPhone from './assets/demo-iphone.png';
+import demoTablet from './assets/demo-ipad.png';
 import { activeVariant, dimensions, linesForText, type Project } from './model';
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/inter';
@@ -28,7 +29,13 @@ export async function renderProject(canvas: HTMLCanvasElement, p: Project) {
   const ctx = temp.getContext('2d')!;
   const variant = activeVariant(p);
   const [bg, ui] = await Promise.all([variant ? loadImage(variant.image) : null, p.mode === 'preserve' && p.ui ? loadImage(p.ui) : null]);
-  if (bg) cover(ctx, bg, w, h); else { const demo = await loadImage(demoPhone); ctx.drawImage(demo, 0, 0, w, h); }
+  if (bg) cover(ctx, bg, w, h);
+  else {
+    const demo = await loadImage(p.format === 'ipad' ? demoTablet : demoPhone);
+    const scale = Math.min(w / demo.width, h / demo.height);
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(demo, (w - demo.width * scale) / 2, (h - demo.height * scale) / 2, demo.width * scale, demo.height * scale);
+  }
   if (!bg && !ui) { canvas.width = w; canvas.height = h; canvas.getContext('2d')!.drawImage(temp, 0, 0); return; }
   const band = ctx.createLinearGradient(0, p.position === 'top' ? 0 : h, 0, p.position === 'top' ? h * .42 : h * .58);
   band.addColorStop(0, `rgba(10,9,25,${p.shade / 100})`); band.addColorStop(1, 'rgba(10,9,25,0)');
