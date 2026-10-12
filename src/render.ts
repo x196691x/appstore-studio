@@ -22,14 +22,14 @@ function cover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, w: number, 
   ctx.drawImage(img, (w - img.width * scale) / 2, (h - img.height * scale) / 2, img.width * scale, img.height * scale);
 }
 function demo(ctx: CanvasRenderingContext2D, w: number, h: number) {
-  const g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#242140'); g.addColorStop(.5, '#6e54ae'); g.addColorStop(1, '#e0a9b9');
+  const g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#171717'); g.addColorStop(.5, '#666666'); g.addColorStop(1, '#cfcfcf');
   ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
   ctx.save(); ctx.translate(w * .53, h * .62); ctx.rotate(-.35);
   for (let i = 9; i >= 0; i--) {
     const x = (i - 5) * w * .035; const y = (i - 5) * h * .035;
     const r = ctx.createLinearGradient(-w * .4, -h * .18, w * .4, h * .18);
-    r.addColorStop(0, '#dbbfef'); r.addColorStop(.46, '#f0e1f8'); r.addColorStop(.55, '#a591db'); r.addColorStop(1, '#6e50a0');
-    ctx.fillStyle = r; ctx.shadowColor = '#23103655'; ctx.shadowBlur = w * .035; ctx.shadowOffsetY = h * .012;
+    r.addColorStop(0, '#d6d6d6'); r.addColorStop(.46, '#f0f0f0'); r.addColorStop(.55, '#aaaaaa'); r.addColorStop(1, '#666666');
+    ctx.fillStyle = r; ctx.shadowColor = '#00000055'; ctx.shadowBlur = w * .035; ctx.shadowOffsetY = h * .012;
     ctx.beginPath(); ctx.roundRect(-w * .35 + x, -h * .12 + y, w * .7, h * .25, w * .18); ctx.fill();
   }
   ctx.restore();
