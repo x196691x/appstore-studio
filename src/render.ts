@@ -1,3 +1,4 @@
+import { ensureFont, fontFamily, fontWeight } from './fonts';
 import { activeVariant, dimensions, linesForText, type Project } from './model';
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/inter';
@@ -52,7 +53,8 @@ export async function renderProject(canvas: HTMLCanvasElement, p: Project) {
     ctx.shadowBlur = 0; ctx.shadowOffsetY = 0; ctx.beginPath(); ctx.roundRect(ux, uy, uw, uh, w * .032); ctx.clip(); ctx.drawImage(ui, ux, uy, uw, uh); ctx.restore();
   }
   const fontSize = p.fontSize * w / 1242;
-  const font = `700 ${fontSize}px "${p.font} Variable"`;
+  await ensureFont(p.font);
+  const font = `${fontWeight(p.font)} ${fontSize}px "${fontFamily(p.font)}"`;
   await document.fonts.load(font, p.title || 'Аа');
   ctx.font = font; ctx.textBaseline = 'top'; ctx.textAlign = p.align; ctx.fillStyle = p.color;
   const pad = w * p.padding / 100, maxWidth = w - 2 * pad;

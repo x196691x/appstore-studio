@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. The editor and PNG export work before AI is connected. Generated images and the latest 12 variants are stored locally in IndexedDB. Fonts ship with the site, including Cyrillic. iPhone: 1242×2688; iPad: 2048×2732.
+Open http://127.0.0.1:5173. The editor and PNG export work before AI is connected. Generated images and the latest 12 variants are stored locally in IndexedDB. Seven base fonts ship with the site, including Cyrillic. The font picker adds 36 Google Fonts families loaded on demand via CSS2 and supports additional families by name (700 with a 400 fallback). Export waits for the selected font to load. iPhone: 1242×2688; iPad: 2048×2732.
 
 ## Connect your existing Cloudflare Worker
 
@@ -50,3 +50,9 @@ npm run build
 ```
 
 Live AI requires Cloudflare login, deployed Worker and configured secrets; local tests use no paid generation.
+
+## UI and reference matching
+
+The editor uses the official MIT-licensed Untitled UI React components (Button, Input, TextArea, Select, Slider, Tabs, Badge) and its Tailwind theme. License is preserved in src/components/UNTITLED-UI-LICENSE. Connection dialog uses React Aria Modal/Dialog.
+
+When a design reference is uploaded it takes precedence over style presets. The model is instructed to preserve composition, colors, lighting, shapes and device placement, remove promotional text, and replace the app screen with supplied UI. Leave the changes field blank for closest matching. Text inside app UI is preserved. AI cannot guarantee a pixel-identical result. Existing variants are not regenerated.
