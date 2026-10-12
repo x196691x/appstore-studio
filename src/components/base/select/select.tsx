@@ -1,6 +1,6 @@
 import type { FC, ReactNode, Ref, RefAttributes } from "react";
 import { isValidElement } from "react";
-import { ChevronDown } from "@untitledui/icons";
+import { ChevronIcon } from "@/components/studio-icons";
 import type { SelectProps as AriaSelectProps } from "react-aria-components";
 import { Button as AriaButton, ListBox as AriaListBox, Select as AriaSelect, SelectValue as AriaSelectValue } from "react-aria-components";
 import { Avatar } from "@/components/base/avatar/avatar";
@@ -91,7 +91,7 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, size, placeholder, icon, r
                                 <p className={cx("text-placeholder", sizes[size].text)}>{placeholder}</p>
                             )}
 
-                            <ChevronDown
+                            <ChevronIcon
                                 aria-hidden="true"
                                 className={cx("ml-auto shrink-0 text-fg-quaternary", size === "lg" ? "size-5" : "size-4 stroke-[2.25px]")}
                             />

@@ -1,4 +1,5 @@
 import { ensureFont, fontFamily, fontWeight } from './fonts';
+import demoPhone from './assets/demo-iphone.png';
 import { activeVariant, dimensions, linesForText, type Project } from './model';
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/inter';
@@ -21,26 +22,14 @@ function cover(ctx: CanvasRenderingContext2D, img: HTMLImageElement, w: number, 
   const scale = Math.max(w / img.width, h / img.height);
   ctx.drawImage(img, (w - img.width * scale) / 2, (h - img.height * scale) / 2, img.width * scale, img.height * scale);
 }
-function demo(ctx: CanvasRenderingContext2D, w: number, h: number) {
-  const g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#171717'); g.addColorStop(.5, '#666666'); g.addColorStop(1, '#cfcfcf');
-  ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-  ctx.save(); ctx.translate(w * .53, h * .62); ctx.rotate(-.35);
-  for (let i = 9; i >= 0; i--) {
-    const x = (i - 5) * w * .035; const y = (i - 5) * h * .035;
-    const r = ctx.createLinearGradient(-w * .4, -h * .18, w * .4, h * .18);
-    r.addColorStop(0, '#d6d6d6'); r.addColorStop(.46, '#f0f0f0'); r.addColorStop(.55, '#aaaaaa'); r.addColorStop(1, '#666666');
-    ctx.fillStyle = r; ctx.shadowColor = '#00000055'; ctx.shadowBlur = w * .035; ctx.shadowOffsetY = h * .012;
-    ctx.beginPath(); ctx.roundRect(-w * .35 + x, -h * .12 + y, w * .7, h * .25, w * .18); ctx.fill();
-  }
-  ctx.restore();
-}
 export async function renderProject(canvas: HTMLCanvasElement, p: Project) {
   const [w, h] = dimensions[p.format];
   const temp = document.createElement('canvas'); temp.width = w; temp.height = h;
   const ctx = temp.getContext('2d')!;
   const variant = activeVariant(p);
   const [bg, ui] = await Promise.all([variant ? loadImage(variant.image) : null, p.mode === 'preserve' && p.ui ? loadImage(p.ui) : null]);
-  if (bg) cover(ctx, bg, w, h); else demo(ctx, w, h);
+  if (bg) cover(ctx, bg, w, h); else { const demo = await loadImage(demoPhone); ctx.drawImage(demo, 0, 0, w, h); }
+  if (!bg && !ui) { canvas.width = w; canvas.height = h; canvas.getContext('2d')!.drawImage(temp, 0, 0); return; }
   const band = ctx.createLinearGradient(0, p.position === 'top' ? 0 : h, 0, p.position === 'top' ? h * .42 : h * .58);
   band.addColorStop(0, `rgba(10,9,25,${p.shade / 100})`); band.addColorStop(1, 'rgba(10,9,25,0)');
   ctx.fillStyle = band; ctx.fillRect(0, 0, w, h);
