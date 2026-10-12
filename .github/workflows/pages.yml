@@ -22,6 +22,28 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - name: Check out portfolio
+        uses: actions/checkout@v4
+        with:
+          repository: x196691x/my-personal-website
+          ref: main
+          path: portfolio
+          ssh-key: ${{ secrets.PORTFOLIO_DEPLOY_KEY }}
+      - name: Publish Studio under the portfolio domain
+        env:
+          STUDIO_COMMIT: ${{ github.sha }}
+        run: |
+          mkdir -p portfolio/app-store-studio
+          rsync -a --delete dist/ portfolio/app-store-studio/
+          touch portfolio/.nojekyll
+          git -C portfolio add -- app-store-studio .nojekyll
+          if ! git -C portfolio diff --cached --quiet; then
+            git -C portfolio config user.name "github-actions[bot]"
+            git -C portfolio config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git -C portfolio commit -m "Update Store Studio from ${STUDIO_COMMIT}"
+            git -C portfolio pull --rebase origin main
+            git -C portfolio push origin HEAD:main
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

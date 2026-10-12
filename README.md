@@ -13,7 +13,7 @@ Open http://127.0.0.1:5173. The editor and PNG export work before AI is connecte
 
 ## Connect your existing Cloudflare Worker
 
-Set `name` in `wrangler.jsonc` to your existing Worker name. This deploy replaces that Worker's code, so choose a dedicated Worker for this app. `ALLOWED_ORIGINS` contains the frontend origin, without a path. It already allows the owner's GitHub Pages origin and local Vite.
+Set `name` in `wrangler.jsonc` to your existing Worker name. This deploy replaces that Worker's code, so choose a dedicated Worker for this app. `ALLOWED_ORIGINS` contains the frontend origin, without a path. It allows `https://ya-dmitriy.ru`, the owner's GitHub Pages origin and local Vite.
 
 ```sh
 npx wrangler login
@@ -30,7 +30,9 @@ A SQLite Durable Object serializes generations and limits attempts globally to 1
 
 ## Deploy frontend
 
-The included `.github/workflows/pages.yml` builds/tests and deploys on pushes to main. In repository settings select Pages → GitHub Actions. Vite uses relative asset URLs for repository subpaths. Worker deployment is separate; no API secret belongs in the frontend or GitHub Pages.
+The included `.github/workflows/pages.yml` builds/tests and deploys on pushes to main. In repository settings select Pages → GitHub Actions. Vite uses relative asset URLs for repository subpaths. The same build is copied automatically to `app-store-studio/` in `x196691x/my-personal-website`, serving https://ya-dmitriy.ru/app-store-studio/ while preserving the portfolio at the domain root. The portfolio's `.nojekyll` marker keeps the generated assets available as static files. `PORTFOLIO_DEPLOY_KEY` is an Actions secret containing a dedicated SSH deploy key with write access only to the portfolio repository. Only that generated directory and `.nojekyll` are staged by the publication job.
+
+Worker deployment is separate; no API secret belongs in the frontend or GitHub Pages. Domain changes must also be added to `ALLOWED_ORIGINS` in `wrangler.jsonc` and deployed to the Worker.
 
 ## Behavior
 
