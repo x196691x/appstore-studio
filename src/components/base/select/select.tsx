@@ -83,10 +83,10 @@ const SelectValue = ({ isOpen, isFocused, isDisabled, size, placeholder, icon, r
                             ) : null}
 
                             {selectedItem ? (
-                                <section className={cx("flex w-full truncate", sizes[size].textContainer)}>
+                                <div className={cx("flex w-full truncate", sizes[size].textContainer)}>
                                     <p className={cx("truncate font-medium text-primary", sizes[size].text)}>{selectedItem?.label}</p>
                                     {selectedItem?.supportingText && <p className={cx("text-tertiary", sizes[size].text)}>{selectedItem?.supportingText}</p>}
-                                </section>
+                                </div>
                             ) : (
                                 <p className={cx("text-placeholder", sizes[size].text)}>{placeholder}</p>
                             )}
@@ -130,7 +130,7 @@ const Select = ({
                         <SelectValue {...state} {...{ size, placeholder }} icon={icon} />
 
                         <Popover size={size} className={rest.popoverClassName}>
-                            <AriaListBox items={items} className="size-full outline-hidden">
+                            <AriaListBox items={items} className="w-full outline-hidden">
                                 {children}
                             </AriaListBox>
                         </Popover>

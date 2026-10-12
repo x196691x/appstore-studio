@@ -1,8 +1,8 @@
 import type { FC, FocusEventHandler, PointerEventHandler, ReactNode, Ref, RefAttributes } from "react";
 import { isValidElement, useCallback, useContext, useRef, useState } from "react";
-import { SearchLg } from "@untitledui/icons";
+import { ChevronDown, SearchLg } from "@untitledui/icons";
 import type { ComboBoxProps as AriaComboBoxProps, GroupProps as AriaGroupProps, ListBoxProps as AriaListBoxProps } from "react-aria-components";
-import { ComboBox as AriaComboBox, Group as AriaGroup, Input as AriaInput, ListBox as AriaListBox, ComboBoxStateContext } from "react-aria-components";
+import { ComboBox as AriaComboBox, Group as AriaGroup, Input as AriaInput, ListBox as AriaListBox, ComboBoxStateContext, Button as AriaButton } from "react-aria-components";
 import { HintText } from "@/components/base/input/hint-text";
 import { Label } from "@/components/base/input/label";
 import { Popover } from "@/components/base/select/popover";
@@ -96,6 +96,8 @@ const ComboBoxValue = ({ size, shortcut, placeholder, shortcutClassName, icon: I
                 />
             </div>
 
+            <AriaButton aria-label="Открыть список" className="shrink-0 cursor-pointer text-quaternary outline-hidden"><ChevronDown className="size-4" aria-hidden="true" /></AriaButton>
+
             {shortcut && (
                 <div
                     className={cx(
@@ -147,7 +149,7 @@ export const ComboBox = ({
 
     return (
         <SelectContext.Provider value={{ size }}>
-            <AriaComboBox menuTrigger="focus" {...otherProps}>
+            <AriaComboBox menuTrigger="focus" items={items} {...otherProps}>
                 {(state) => (
                     <div className="flex flex-col gap-1.5">
                         {otherProps.label && (
@@ -170,7 +172,7 @@ export const ComboBox = ({
                         />
 
                         <Popover size={size} triggerRef={placeholderRef} style={{ width: popoverWidth }} className={otherProps.popoverClassName}>
-                            <AriaListBox items={items} className="size-full outline-hidden">
+                            <AriaListBox items={items} className="w-full outline-hidden">
                                 {children}
                             </AriaListBox>
                         </Popover>
