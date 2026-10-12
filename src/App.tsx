@@ -9,7 +9,7 @@ export default function App() {
   const [ready, setReady] = useState(false), [saved, setSaved] = useState(false);
   const [error, setError] = useState(''), [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false), [settings, showSettings] = useState(false);
-  const [url, setUrl] = useState(() => localStorage.getItem('studio-worker') || '');
+  const [url, setUrl] = useState(() => localStorage.getItem('studio-worker') || 'https://appstore-studio-api.dimarandom1337.workers.dev');
   const [token, setToken] = useState(''), [connected, setConnected] = useState(false);
   const [search, setSearch] = useState(''), [tab, setTab] = useState('design');
   const [rendering, setRendering] = useState(false);
