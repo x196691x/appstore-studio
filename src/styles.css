@@ -38,7 +38,7 @@ input[type=file] { display: none; }
 .panel-heading h1 { font-size: 25px; line-height: 1.2; letter-spacing: -.7px; font-weight: 700; margin: 0; }
 .panel-content { display: flex; flex-direction: column; gap: 32px; }
 .panel-content > section { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; }
-.panel-content > section:nth-child(2), .panel-content > section:last-child { gap: 16px; }
+.panel-content > .materials-section, .panel-content > section:last-child { gap: 16px; }
 .panel-content section h2, .section-heading h2 { font-size: 14px; font-weight: 600; line-height: 21px; margin: 0; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .helper { font-size: 12px; line-height: 1.7; color: var(--color-text-tertiary); margin: 0; }
@@ -78,7 +78,9 @@ input[type=file] { display: none; }
 .stage { display: flex; flex: 1; min-height: 0; align-items: flex-start; justify-content: center; padding: 20px 0; container-type: size; }
 .canvas-frame { position: relative; height: min(640px, 100cqh, calc(100cqw / var(--canvas-ratio))); max-width: 100%; max-height: 100%; flex-shrink: 0; border: 1px solid var(--color-border-secondary); border-radius: 36px; overflow: hidden; background: var(--color-bg-primary); line-height: 0; box-shadow: 0 20px 64px -4px #0000000a, 0 8px 8px -4px #00000008, 0 3px 3px -1.5px #0000000a; }
 .canvas-frame canvas { height: 100%; width: 100%; display: block; object-fit: contain; }
-.preview-note { display: flex; justify-content: center; align-items: center; gap: 12px; font-size: 11px; line-height: 16.5px; color: var(--color-text-tertiary); flex-shrink: 0; }
+.preview-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; flex-shrink: 0; }
+.clear-preview { grid-column: 3; justify-self: end; padding: 0; min-height: 0; }
+.preview-note { grid-column: 2; display: flex; justify-content: center; align-items: center; gap: 12px; font-size: 11px; line-height: 16.5px; color: var(--color-text-tertiary); flex-shrink: 0; }
 .history { padding: 30px 20px; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 16px; background: var(--color-bg-primary); }
 .variant-list { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
 .variant { position: relative; flex-shrink: 0; border: 1px solid var(--color-border-primary); border-radius: 10px; padding: 8px; text-align: left; }
@@ -91,9 +93,6 @@ input[type=file] { display: none; }
 .empty-history strong { font-size: 14px; line-height: 21px; font-weight: 600; color: var(--color-text-primary); }
 .empty-history p { font-size: 11px; line-height: 17.6px; color: var(--color-text-tertiary); margin: -6px 0 0; }
 .import-background { display: flex; gap: 8px; align-items: center; justify-content: center; border: 1px solid var(--color-border-primary); padding: 10px 8px; border-radius: 8px; font-size: 14px; font-weight: 600; line-height: 20px; color: var(--color-text-primary); cursor: pointer; box-shadow: var(--shadow-xs); }
-.local-note { padding-top: 24px; }
-.local-note strong { font-size: 11px; color: var(--color-text-secondary); font-weight: 500; line-height: 16.5px; }
-.local-note p { font-size: 11px; line-height: 18.7px; color: var(--color-text-tertiary); margin: 7px 0 0; }
 .notice { flex-shrink: 0; max-height: 110px; overflow-y: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--color-bg-brand-primary); border: 1px solid var(--color-border-brand_alt); color: var(--color-text-brand-secondary); border-radius: 8px; padding: 10px 14px; font-size: 12px; line-height: 1.7; margin-top: 14px; }
 .notice.error { background: #f5f5f5; color: #262626; border-color: #bdbdbd; }
 .modal-backdrop { position: fixed; inset: 0; background: #0c111d88; backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 20px; }
@@ -134,6 +133,8 @@ input[type=file] { display: none; }
   .controls-scroll [role=tab] { font-size: 10px; padding: 8px 2px; gap: 4px; }
   .mode-options [role=tab] { height: auto; min-height: 36px; white-space: normal; }
   .mode-options [role=tab] > span { white-space: normal; text-align: center; line-height: 14px; overflow-wrap: anywhere; }
+  .preview-footer { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .clear-preview { align-self: flex-end; font-size: 12px; }
   .preview-note { flex-direction: column; gap: 6px; }
   .helper { font-size: 11px; }
   .font-preview { font-size: 18px; padding: 10px; }
